@@ -122,6 +122,9 @@ class OTPPlugin : FlutterPlugin, MethodCallHandler, PluginRegistry.ActivityResul
                     val message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)
                     lastResult?.success(message)
                     lastResult = null
+                }  else if(data == null) {
+                    lastResult?.error("1001", "Intent did not return with data", null)
+                    lastResult = null
                 } else {
                     // Consent denied. User can type OTC manually.
                     lastResult?.error("403", "User denied consent", null)
