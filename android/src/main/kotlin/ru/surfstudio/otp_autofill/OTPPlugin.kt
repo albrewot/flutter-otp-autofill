@@ -124,6 +124,8 @@ class OTPPlugin : FlutterPlugin, MethodCallHandler, PluginRegistry.ActivityResul
                     lastResult = null
                 } else {
                     // Consent denied. User can type OTC manually.
+                    lastResult?.error("403", "User denied consent", null)
+                    lastResult = null
                 }
 
             credentialPickerRequest -> if (resultCode == Activity.RESULT_OK && data != null) {
