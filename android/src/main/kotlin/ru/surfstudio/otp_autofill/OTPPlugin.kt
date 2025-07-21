@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
+import android.util.Log
 import androidx.activity.result.IntentSenderRequest.*
 import androidx.annotation.NonNull;
 import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
@@ -120,13 +121,16 @@ class OTPPlugin : FlutterPlugin, MethodCallHandler, PluginRegistry.ActivityResul
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     // Get SMS message content
                     val message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)
+                    Log.d("[OTP SUCCESS]", message ?? "DATA")
                     lastResult?.success(message)
                     lastResult = null
                 }  else if(data == null) {
+                    Log.d("[OTP NULL]", "NULL")
                     lastResult?.error("1001", "Intent did not return with data", null)
                     lastResult = null
                 } else {
                     // Consent denied. User can type OTC manually.
+                    Log.d("[OTP DENIED]", "NULL")
                     lastResult?.error("403", "User denied consent", null)
                     lastResult = null
                 }
